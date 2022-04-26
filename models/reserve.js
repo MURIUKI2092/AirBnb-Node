@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const ReserveSchema = new mongoose . Schema({
 
+  houseTitle:{
+    type:String,
+    required:true,
 
+  },
   username :
   {
     type:String
@@ -15,6 +19,10 @@ const ReserveSchema = new mongoose . Schema({
     type:String,
    
     default:" "},
+    hostLocation:
+  {type:String,
+    required:true
+   },
 
 },{timestamps:true});
 

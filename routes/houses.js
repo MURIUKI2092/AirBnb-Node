@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const house = require("../models/houses");
+const sendHostedEmail = require("../email/hostedEmail");
 
 //adding a house to the database. Done by the host
 
@@ -9,6 +10,11 @@ router.post("/",async(req,res)=>{
  
   try{
     const savedHouse = await newHouse.save();
+    const sendEmail = await sendHostedEmail({hostEmail: req.body.Email,
+      hostName:req.body.username
+      ,hostLocation:req.body.HostLocation,
+      houseTitle:req.body.houseTitle})
+
     res.status(200).json(savedHouse);
   }catch(err){
     res.status(500).json(err)

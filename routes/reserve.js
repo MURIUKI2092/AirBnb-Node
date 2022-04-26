@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const reserve = require("../models/reserve");
+const sendBookedEmail= require("../email/bookedEmail");
 
 // ensures a user books a selected house.
 router.post("/:id",async(req,res)=>{
@@ -7,6 +8,11 @@ router.post("/:id",async(req,res)=>{
 
   try{
     const savedReserve = await reservedHouse.save();
+    const sendEmail = await sendBookedEmail({
+      username:req.body.username,
+      houseTitle:req.body.houseTitle,
+      hostLocation:req.body.hostLocation, 
+      Email:req.body.Email})
     res.status(200).json(savedReserve);
 
   }catch(err){
@@ -18,7 +24,8 @@ router.post("/:id",async(req,res)=>{
 
 router.get("/:username",async(req,res)=>{
   try{
-    const userBookedHouses = await reserve.find({username:req.body.username})
+    const userBookedHouses = await reserve.find({username:req.body.username,})
+   
     res.status(200).json(userBookedHouses);
   }catch(err){
     res.status(500).json(err);
