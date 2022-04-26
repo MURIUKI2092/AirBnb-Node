@@ -8,6 +8,7 @@ dotenv.config();
 app.use(express.json());
 
 const houseRoute = require("./routes/houses")
+const reserveRoute = require("./routes/reserve")
 
 mongoose
          .connect(process.env.MONGO_URL)
@@ -17,6 +18,8 @@ mongoose
          });
 
 app.use("/api/v1/house",houseRoute);
+app.use("/api/v1/house/reserve", reserveRoute)
+
 app.listen({port},()=>{
   console.log("The server is on")
 });

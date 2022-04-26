@@ -1,29 +1,38 @@
 const mongoose = require("mongoose");
-const { stringify } = require("nodemon/lib/utils");
-
 
 const HouseSchema = new mongoose.Schema({
+  houseTitle:{
+    type:String,
+    required:true,
+
+  },
   username:
   {type:String,
+    required:true
     },
   Email:
-  {type:String
+  {type:String,
+    required:true
    },
   Telephone:{
     type:String,
    
     default:" "},
   HostLocation:
-  {type:String
+  {type:String,
+    required:true
    },
   price:
-  {type:Number
+  {type:Number,
+    required:true
   },
   Description:
   {type:String,
+    required:true
  },
   image:
   {type:String,
+    required:true,
    
   default:""}
 },{timestamps:true}

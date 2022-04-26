@@ -1,13 +1,12 @@
 const router = require("express").Router();
-const res = require("express/lib/response");
+
 const house = require("../models/houses");
 
 //adding a house to the database. Done by the host
 
 router.post("/",async(req,res)=>{
   const newHouse = new house(req.body);
-  console.log(req.body)
-
+ 
   try{
     const savedHouse = await newHouse.save();
     res.status(200).json(savedHouse);
@@ -29,11 +28,11 @@ router.get("/",async(req,res)=>{
   }
 });
 
-// getting all houses which were posted by an individual
-router.get("/:username",async(req,res)=>{
+// getting all houses which were posted in a given town
+router.get("/:HostLocation",async(req,res)=>{
   try{
-    const  usernameHouse = await house.find({username:req.params.username})
-    res.status(200).json(usernameHouse)
+    const  locationHouse = await house.find({HostLocation:req.params.HostLocation})
+    res.status(200).json(locationHouse)
   }catch(err){
     res.status(500).json(err);
   }
