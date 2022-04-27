@@ -10,7 +10,7 @@ app.use(express.json());
 
 const houseRoute = require("./routes/houses")
 const reserveRoute = require("./routes/reserve")
-const BookedMailRoute = require("./email/bookedEmail")
+
 
 mongoose
          .connect(process.env.MONGO_URL)

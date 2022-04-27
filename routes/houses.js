@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const  nodemailer = require("nodemailer");
 const house = require("../models/houses");
-
+const dotenv = require("dotenv");
+dotenv.config()
 
 //adding a house to the database. Done by the host
 
@@ -14,8 +15,8 @@ router.post("/host",async(req,res)=>{
     let transporter = nodemailer.createTransport({
       service:'gmail',
       auth:{
-        user: "muriukijames33@gmail.com",
-        pass:"xvnuqrtdghprspap"
+        user: process.env.myEmail,
+        pass:process.env.myPass
       },
       tls:{
         rejectUnauthorized:false
@@ -24,7 +25,7 @@ router.post("/host",async(req,res)=>{
 
 
     let mailOptions = {
-      from:'" AirBnb Kenya"<muriukijames33@gmail.com>',
+      from:'" AirBnb Kenya"<process.env.myEmail>',
       to:req.body.Email.trim(),
       subject:"Hosted",
       // text:"A sample email to indicate that the code is working"
