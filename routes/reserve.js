@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const reserve = require("../models/reserve");
-const sendBookedEmail= require("../email/bookedEmail");
+const  nodemailer = require("nodemailer");
+
+
 
 // ensures a user books a selected house.
 router.post("/:id",async(req,res)=>{
@@ -8,11 +10,42 @@ router.post("/:id",async(req,res)=>{
 
   try{
     const savedReserve = await reservedHouse.save();
-    const sendEmail = await sendBookedEmail({
-      username:req.body.username,
-      houseTitle:req.body.houseTitle,
-      hostLocation:req.body.hostLocation, 
-      Email:req.body.Email})
+    let transporter = nodemailer.createTransport({
+      service:'gmail',
+      auth:{
+        user: "muriukijames33@gmail.com",
+        pass:"xvnuqrtdghprspap"
+      },
+      tls:{
+        rejectUnauthorized:false
+      }
+    });
+
+
+    let mailOptions = {
+      from:'" AirBnb Kenya"<muriukijames33@gmail.com>',
+      to:req.body.Email.trim(),
+      subject:"Booked",
+      // text:"A sample email to indicate that the code is working"
+      html: `<html>
+      <body>Hello ${req.body.username} ,<br></br> You have successfully booked a 
+      ${req.body.houseTitle}  house in  ${req.body.hostLocation} .<br></br>Regards <strong>
+       AirBnb</strong>.</body>
+       </html>`
+       
+    };
+    transporter.sendMail(mailOptions,(err,success)=>{
+      if(err){
+        console.log(err)
+      }
+      else{
+        console.log("Email is sent")
+      }
+    
+    
+  
+  }
+    )
     res.status(200).json(savedReserve);
 
   }catch(err){
