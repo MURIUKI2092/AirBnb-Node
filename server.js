@@ -3,7 +3,8 @@ const app = express();
 const mongoose= require("mongoose");
 const bodyParser = require("body-parser")
 port = 5000;
-
+var cors = require('cors');
+app.use(cors());
 const dotenv = require("dotenv");
 dotenv.config();
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use("/api/v1/house/reserve", reserveRoute)
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 
-app.listen({port},()=>{
+const server =app.listen({port},()=>{
   console.log("The server is on")
 });
+module.exports = server;
