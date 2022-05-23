@@ -77,5 +77,15 @@ router.get("/:HostLocation",async(req,res)=>{
     res.status(500).json(err);
   }
 })
+router.get("/:id",async(req,res)=>{
+  try{
+    const singleHouse = await house.findById(req.params.id);
+    // res.json()
+    
+    res.status(200).json("found")
+  }catch(err){
+    res.status(500).json(err)
+  }
+})
 
 module.exports = router;
